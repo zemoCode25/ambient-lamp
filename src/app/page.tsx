@@ -14,7 +14,7 @@ export default function Home() {
         <NeonGradientCard
           borderSize={0}
           neonColors={{ firstColor: "#1034E6", secondColor: "#EDE500" }}
-          className="!p-0 shadow-md"
+          className="shadow-md"
         >
           <div className="h-full w-full">
             <AuroraText

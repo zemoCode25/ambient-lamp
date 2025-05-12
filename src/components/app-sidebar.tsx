@@ -57,7 +57,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="hover:bg-amber-200">
+                  <SidebarMenuButton asChild className="hover:bg-blue-200">
                     <a href={item.url}>
                       <item.icon color={"#1E40AF"} />
                       <span>{item.title}</span>
