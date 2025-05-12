@@ -1,4 +1,9 @@
-import { Calendar, Home, Settings, SlidersHorizontal } from "lucide-react";
+import {
+  Calendar,
+  LayoutDashboard,
+  Settings,
+  SlidersHorizontal,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +21,7 @@ const items = [
   {
     title: "Dashboard",
     url: "dashboard",
-    icon: Home,
+    icon: LayoutDashboard,
   },
   {
     title: "Controls",
@@ -38,12 +43,12 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent className="bg-white">
-        <SidebarGroup>
+      <SidebarContent className="font-inter bg-gradient-to-t from-yellow-100 to-gray-50 py-1 pl-2">
+        <SidebarGroup className="flex flex-col gap-3">
           <SidebarGroupLabel>
             <AuroraText
-              colors={["#1034E6", "#57C3C7", "#EDE500"]}
-              className="rounded-sm text-base font-bold"
+              colors={["#1034E6", "#EDE500"]}
+              className="rounded-sm text-lg font-bold"
             >
               AmbientLamp
             </AuroraText>
@@ -52,9 +57,9 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="hover:bg-amber-200">
                     <a href={item.url}>
-                      <item.icon />
+                      <item.icon color={"#1E40AF"} />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>

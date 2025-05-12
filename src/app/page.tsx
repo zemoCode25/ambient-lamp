@@ -18,7 +18,7 @@ export default function Home() {
         >
           <div className="h-full w-full">
             <AuroraText
-              colors={["#1034E6", "#57C3C7", "#EDE500"]}
+              colors={["#1034E6", "#EDE500"]}
               className="text-3xl font-bold sm:text-5xl md:text-7xl"
             >
               AmbientLamp
