@@ -18,37 +18,103 @@ export default function Controls() {
       <SidebarInset>
         <SiteHeader />
         <div className="font-inter flex h-full w-full flex-col items-center justify-center">
-          <div className="flex flex-col gap-3 rounded-md p-10">
+          <div className="flex flex-col gap-5 rounded-md p-10">
             <div className="flex gap-5 rounded-md">
               <Card className="flex h-fit flex-col gap-1 rounded-sm px-6 py-5">
                 <h2 className="text-xl font-semibold">Power</h2>
-                <div className="flex">
-                  <button className="w-full cursor-pointer border px-10 py-8 text-lg">
+                <div className="flex gap-2">
+                  <Button
+                    className="cursor-pointer border px-10 py-8 text-lg"
+                    variant={"outline"}
+                  >
                     ON
-                  </button>
-                  <button className="w-full cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800">
+                  </Button>
+                  <Button
+                    className="cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800"
+                    variant={"outline"}
+                  >
                     OFF
-                  </button>
-                  <button className="w-full cursor-pointer border px-10 py-8 text-lg">
+                  </Button>
+                  <Button
+                    className="cursor-pointer border px-10 py-8 text-lg"
+                    variant={"outline"}
+                  >
                     AUTO
-                  </button>
+                  </Button>
                 </div>
               </Card>
               <Card className="flex h-fit flex-col gap-1 rounded-sm px-6 py-5">
                 <h2 className="text-xl font-semibold">Mode</h2>
-                <div className="flex">
-                  <button className="w-full cursor-pointer border px-10 py-8 text-lg">
+                <div className="flex gap-2">
+                  <Button
+                    className="cursor-pointer border px-10 py-8 text-lg"
+                    variant={"outline"}
+                  >
                     Warm
-                  </button>
-                  <button className="w-full cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800">
+                  </Button>
+                  <Button
+                    className="cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800"
+                    variant={"outline"}
+                  >
                     Cool
-                  </button>
-                  <button className="w-full cursor-pointer border px-10 py-8 text-lg">
+                  </Button>
+                  <Button
+                    className="cursor-pointer border px-10 py-8 text-lg"
+                    variant={"outline"}
+                  >
                     Auto
-                  </button>
+                  </Button>
                 </div>
               </Card>
             </div>
+            <Card className="flex flex-row items-center justify-between gap-10 rounded-sm px-6 py-3">
+              <div className="flex w-full flex-col">
+                <h2 className="text-xl font-semibold">
+                  Auto <span className="text-green-500">on</span>
+                </h2>
+                {/* Auto On */}
+                <div className="flex justify-between gap-2">
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Hours</label>
+                  </div>
+                  <span className="pt-1.5">:</span>
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Minutes</label>
+                  </div>
+                  <span className="pt-1.5">:</span>
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Seconds</label>
+                  </div>
+                </div>
+                {/* Auto On */}
+              </div>
+              <div className="flex w-full flex-col">
+                <h2 className="text-xl font-semibold">
+                  Auto <span className="text-red-500">off</span>
+                </h2>
+                {/* Auto Off */}
+                <div className="flex justify-between gap-2">
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Hours</label>
+                  </div>
+                  <span className="pt-1.5">:</span>
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Minutes</label>
+                  </div>
+                  <span className="pt-1.5">:</span>
+                  <div className="flex flex-col items-center">
+                    <Input className="w-[7rem] text-center text-sm"></Input>
+                    <label htmlFor="">Seconds</label>
+                  </div>
+                </div>
+                {/* Auto Off */}
+              </div>
+            </Card>
             <Card className="flex flex-row items-center gap-4 rounded-sm px-6 py-5">
               <div className="jus flex h-full w-full flex-col gap-1">
                 <h2 className="text-xl font-semibold">Lamp color</h2>
@@ -64,15 +130,15 @@ export default function Controls() {
                     </div>
                     <div className="flex justify-between gap-2">
                       <div className="flex flex-col items-center">
-                        <Input className="w-[5rem] text-sm"></Input>
+                        <Input className="w-[5rem] text-center text-sm"></Input>
                         <label htmlFor="">H</label>
                       </div>
                       <div className="flex flex-col items-center">
-                        <Input className="w-[5rem] text-sm"></Input>
+                        <Input className="w-[5rem] text-center text-sm"></Input>
                         <label htmlFor="">S</label>
                       </div>
                       <div className="flex flex-col items-center">
-                        <Input className="w-[5rem] text-sm"></Input>
+                        <Input className="w-[5rem] text-center text-sm"></Input>
                         <label htmlFor="">B</label>
                       </div>
                     </div>
