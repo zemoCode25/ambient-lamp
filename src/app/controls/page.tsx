@@ -12,6 +12,18 @@ import { Input } from "@/components/ui/input";
 export default function Controls() {
   const [color, setColor] = useState<string>("#FFF00F");
   console.log(`p-10 bg-[${color}]`);
+
+  const [power, setPower] = useState("off");
+  const [mode, setMode] = useState("warm");
+
+  function handlePowerClick(selectedPower: string) {
+    setPower(selectedPower);
+  }
+
+  function handleModeClick(selectedMode: string) {
+    setMode(selectedMode);
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -24,20 +36,23 @@ export default function Controls() {
                 <h2 className="text-xl font-semibold">Power</h2>
                 <div className="flex gap-2">
                   <Button
-                    className="cursor-pointer border px-10 py-8 text-lg"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-green-500 hover:bg-green-100 ${power === "on" ? "border-green-500 bg-green-100 text-green-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handlePowerClick("on")}
                   >
                     ON
                   </Button>
                   <Button
-                    className="cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-red-500 hover:bg-red-100 ${power === "off" ? "border-red-500 bg-red-100 text-red-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handlePowerClick("off")}
                   >
                     OFF
                   </Button>
                   <Button
-                    className="cursor-pointer border px-10 py-8 text-lg"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-blue-500 hover:bg-blue-100 ${power === "auto" ? "border-blue-500 bg-blue-100 text-blue-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handlePowerClick("auto")}
                   >
                     AUTO
                   </Button>
@@ -47,22 +62,25 @@ export default function Controls() {
                 <h2 className="text-xl font-semibold">Mode</h2>
                 <div className="flex gap-2">
                   <Button
-                    className="cursor-pointer border px-10 py-8 text-lg"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-amber-500 hover:bg-amber-100 ${mode === "warm" ? "border-amber-500 bg-amber-100 text-amber-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handleModeClick("warm")}
                   >
-                    Warm
+                    WARM
                   </Button>
                   <Button
-                    className="cursor-pointer border-2 border-red-800 bg-red-100 px-10 py-8 text-lg text-red-800"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-cyan-500 hover:bg-cyan-100 ${mode === "cool" ? "border-cyan-500 bg-cyan-100 text-cyan-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handleModeClick("cool")}
                   >
-                    Cool
+                    COOL
                   </Button>
                   <Button
-                    className="cursor-pointer border px-10 py-8 text-lg"
+                    className={`cursor-pointer border px-10 py-8 text-lg hover:border-blue-500 hover:bg-blue-100 ${mode === "auto" ? "border-blue-500 bg-blue-100 text-blue-800" : ""}`}
                     variant={"outline"}
+                    onClick={() => handleModeClick("auto")}
                   >
-                    Auto
+                    AUTO
                   </Button>
                 </div>
               </Card>
@@ -138,7 +156,7 @@ export default function Controls() {
                         <label htmlFor="">S</label>
                       </div>
                       <div className="flex flex-col items-center">
-                        <Input className="w-[5rem] text-center text-sm"></Input>
+                        <Input className="w-[5rem] text-center text-sm outline-none"></Input>
                         <label htmlFor="">B</label>
                       </div>
                     </div>
