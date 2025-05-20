@@ -43,7 +43,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent className="font-inter bg-gradient-to-t from-yellow-100 to-gray-50 py-1 pl-2">
+      <SidebarContent className="font-inter bg-amber-50 py-1 pl-2">
         <SidebarGroup className="flex flex-col gap-3">
           <SidebarGroupLabel>
             <AuroraText
@@ -59,7 +59,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="hover:bg-blue-200">
                     <a href={item.url}>
-                      <item.icon color={"#1E40AF"} />
+                      <item.icon />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
