@@ -40,8 +40,24 @@ export default function Dashboard() {
                 <h2 className="text-3xl font-bold">68.92</h2>
               </Card>
             </div>
-            <Component />
-            <Component />
+            <Component
+              title="Total Revenue"
+              description="Revenue for the business."
+              chartData={chartData1}
+              trend="Trending up by 3.4% this month"
+            />
+            <Component
+              title="Sales this month"
+              description="Total sales of the business."
+              chartData={chartData2}
+              trend="Trending up by 7.4% this month"
+            />
+            <Component
+              title="Total Products"
+              description="Total number of products."
+              chartData={chartData3}
+              trend="Trending up by 5% this month"
+            />
           </Card>
         </div>
       </SidebarInset>
