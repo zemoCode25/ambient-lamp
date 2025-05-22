@@ -36,7 +36,7 @@ export default function Dashboard() {
               <Card className="flex h-fit w-full flex-col gap-1 px-10 py-7">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <h1 className="text-black">Temperature</h1>
+                    <h1 className="font-medium text-black">Temperature</h1>
                     <small className="text-gray-500">
                       Updated every 30 secs
                     </small>
@@ -48,7 +48,7 @@ export default function Dashboard() {
               <Card className="flex h-fit w-full flex-col gap-1 px-10 py-7">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <h1 className="text-black">Humidity</h1>
+                    <h1 className="font-medium text-black">Humidity</h1>
                     <small className="text-gray-500">
                       Updated every 30 secs
                     </small>

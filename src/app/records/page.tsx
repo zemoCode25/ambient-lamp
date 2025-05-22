@@ -36,42 +36,17 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { Card } from "@/components/ui/card";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export type Payment = {
+export type Record = {
   id: string;
   temperature: number;
   time: Date;
   humidity: number;
 };
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    temperature: 316,
-    time: new Date("11/10/2021, 11:49:36 AM"),
-    humidity: 458,
-  },
-  {
-    id: "3u1reuv4",
-    temperature: 242,
-    time: new Date("11/10/2020, 11:49:36 AM"),
-    humidity: 458,
-  },
-  {
-    id: "derv1ws0",
-    temperature: 837,
-    time: new Date("11/10/2017, 11:49:36 AM"),
-    humidity: 458,
-  },
-  {
-    id: "5kma53ae",
-    temperature: 874,
-    time: new Date("11/10/2016, 11:49:36 AM"),
-    humidity: 458,
-  },
-];
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Record>[] = [
   {
     accessorKey: "time",
     header: ({ column }) => {
@@ -86,16 +61,25 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => {
-      const timeValue = row.getValue("time") as Date;
+      const rawTime = row.getValue("time") as string;
+
+      // Strip microseconds for browser compatibility
+      const cleanTime = rawTime.replace(/\.\d+/, "");
+      const timeValue = new Date(cleanTime); // now a valid JS Date object
+
+      if (isNaN(timeValue.getTime())) {
+        return <div className="px-2 text-red-500">Invalid time</div>;
+      }
 
       const formattedDate = timeValue.toLocaleString("en-PH", {
-        year: "numeric", // 2016
-        month: "long", // November
-        day: "numeric", // 10
+        year: "numeric",
+        month: "long",
+        day: "numeric",
         hour: "numeric",
         minute: "numeric",
         second: "numeric",
       });
+
       return <div className="px-2 font-medium">{formattedDate}</div>;
     },
   },
@@ -113,7 +97,9 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="pl-3 lowercase">{row.getValue("humidity")}</div>
+      <div className="pl-3 font-medium lowercase">
+        {row.getValue("humidity")}
+      </div>
     ),
   },
   {
@@ -143,6 +129,30 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export default function DataTableDemo() {
+  const [records, setRecords] = useState<Record[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchAll() {
+    try {
+      const response = await fetch("api/records");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const json = await response.json();
+      setRecords(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchAll();
+    const interval = setInterval(fetchAll, 10000); // every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -151,8 +161,11 @@ export default function DataTableDemo() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const data = {
+    value: records,
+  };
   const table = useReactTable({
-    data,
+    data: data.value,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -217,55 +230,59 @@ export default function DataTableDemo() {
                 </DropdownMenu>
               </div>
               <div className="w-full rounded-md border">
-                <Table>
-                  <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                          return (
-                            <TableHead key={header.id}>
-                              {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext(),
-                                  )}
-                            </TableHead>
-                          );
-                        })}
-                      </TableRow>
-                    ))}
-                  </TableHeader>
-                  <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                      table.getRowModel().rows.map((row) => (
-                        <TableRow
-                          key={row.id}
-                          data-state={row.getIsSelected() && "selected"}
-                          className="p-2"
-                        >
-                          {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </TableCell>
-                          ))}
+                {loading ? (
+                  <h1>Loading...</h1>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => {
+                            return (
+                              <TableHead key={header.id}>
+                                {header.isPlaceholder
+                                  ? null
+                                  : flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext(),
+                                    )}
+                              </TableHead>
+                            );
+                          })}
                         </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell
-                          colSpan={columns.length}
-                          className="h-24 text-center"
-                        >
-                          No results.
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
+                      ))}
+                    </TableHeader>
+                    <TableBody>
+                      {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                          <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && "selected"}
+                            className="p-2"
+                          >
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell
+                            colSpan={columns.length}
+                            className="h-24 text-center"
+                          >
+                            No results.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                )}
               </div>
               <div className="flex w-full items-center justify-end space-x-2 py-4">
                 <div className="text-muted-foreground flex-1 text-sm">
