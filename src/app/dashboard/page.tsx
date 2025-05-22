@@ -1,8 +1,11 @@
+"use client";
+
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { Card } from "@/components/ui/card";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Component } from "@/components/utils-components/Chart";
+import { useState, useEffect } from "react";
 
 import { ThermometerSun } from "lucide-react";
 
@@ -24,7 +27,38 @@ const chartData2 = [
   { month: "June", desktop: 214 },
 ];
 
+export type Record = {
+  id: string;
+  temperature: number;
+  time: Date;
+  humidity: number;
+};
+
 export default function Dashboard() {
+  const [record, setRecords] = useState<Record>([]);
+  const [loading, setLoading] = useState(true);
+  async function fetchAll() {
+    try {
+      const response = await fetch("api/records/latest-record");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const json = await response.json();
+      setRecords(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchAll();
+    const interval = setInterval(fetchAll, 10000); // every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  console.log(record);
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -43,7 +77,7 @@ export default function Dashboard() {
                   </div>
                   <ThermometerSun size={20} color="#6A7282" />
                 </div>
-                <h2 className="text-3xl font-bold">45.67</h2>
+                <h2 className="text-3xl font-bold">{record?.temperature}</h2>
               </Card>
               <Card className="flex h-fit w-full flex-col gap-1 px-10 py-7">
                 <div className="flex items-center justify-between">
