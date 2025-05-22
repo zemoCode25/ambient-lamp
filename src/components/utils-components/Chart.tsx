@@ -15,14 +15,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -33,14 +25,29 @@ const chartConfig = {
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
-export function Component() {
+
+interface Data {
+  month?: string;
+  desktop?: number;
+  mobile?: number;
+}
+
+export function Component({
+  title,
+  description,
+  chartData,
+  trend,
+}: {
+  title: string;
+  description: string;
+  chartData: Data[];
+  trend: string;
+}) {
   return (
-    <Card className="w-[30rem]">
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>Area Chart - Stacked</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -65,18 +72,10 @@ export function Component() {
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
             />
-            <Area
-              dataKey="mobile"
-              type="natural"
-              fill="var(--color-chart)"
-              fillOpacity={0.4}
-              stroke="var(--color-chart)"
-              stackId="a"
-            />
             <defs>
               <linearGradient id="colorChart" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fcd34d" stopOpacity={1} />
-                <stop offset="100%" stopColor="#f8fafc" stopOpacity={1} />
+                <stop offset="0%" stopColor="#FEF9C2" stopOpacity={1} />
+                <stop offset="100%" stopColor="#FDC700" stopOpacity={1} />
               </linearGradient>
             </defs>
             <Area
@@ -84,7 +83,7 @@ export function Component() {
               type="natural"
               fill="url(#colorChart)"
               fillOpacity={0.4}
-              stroke="#fdd34d"
+              stroke="#F0B100"
               stackId="a"
             />
           </AreaChart>
@@ -94,10 +93,10 @@ export function Component() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              {trend} <TrendingUp className="h-4 w-4" />
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - June 2024
+              January - May 2025
             </div>
           </div>
         </div>

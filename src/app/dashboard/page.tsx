@@ -6,6 +6,24 @@ import { Component } from "@/components/utils-components/Chart";
 
 import { ThermometerSun } from "lucide-react";
 
+const chartData1 = [
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
+];
+
+const chartData2 = [
+  { month: "January", desktop: 689 },
+  { month: "February", desktop: 304 },
+  { month: "March", desktop: 480 },
+  { month: "April", desktop: 399 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
+];
+
 export default function Dashboard() {
   return (
     <SidebarProvider>
@@ -40,24 +58,20 @@ export default function Dashboard() {
                 <h2 className="text-3xl font-bold">68.92</h2>
               </Card>
             </div>
-            <Component
-              title="Total Revenue"
-              description="Revenue for the business."
-              chartData={chartData1}
-              trend="Trending up by 3.4% this month"
-            />
-            <Component
-              title="Sales this month"
-              description="Total sales of the business."
-              chartData={chartData2}
-              trend="Trending up by 7.4% this month"
-            />
-            <Component
-              title="Total Products"
-              description="Total number of products."
-              chartData={chartData3}
-              trend="Trending up by 5% this month"
-            />
+            <div className="flex w-[70%] flex-row gap-5">
+              <Component
+                title="Total Revenue"
+                description="Revenue for the business."
+                chartData={chartData1}
+                trend="Trending up by 3.4% this month"
+              />
+              <Component
+                title="Sales this month"
+                description="Total sales of the business."
+                chartData={chartData2}
+                trend="Trending up by 7.4% this month"
+              />
+            </div>
           </Card>
         </div>
       </SidebarInset>
