@@ -1,6 +1,7 @@
 "use client";
 import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Record as DataRecord } from "@/app/dashboard/page";
 import {
   Card,
   CardContent,
@@ -10,38 +11,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
+// const chartConfig = {
+//   time: {
+//     label: "Time",
+//     color: "hsl(var(--chart-1))",
+//   },
+//   temperature: {
+//     label: "Temp",
+//     color: "hsl(var(--chart-2))",
+//   },
+// } satisfies ChartConfig;
 
-interface Data {
-  month?: string;
-  desktop?: number;
-  mobile?: number;
-}
+type ChartConfig = Record<string, { label: string; color: string }>;
 
 export function Component({
   title,
   description,
   chartData,
   trend,
+  chartConfig,
 }: {
   title: string;
   description: string;
-  chartData: Data[];
+  chartData: DataRecord[];
   trend: string;
+  chartConfig: ChartConfig;
 }) {
   return (
     <Card className="w-full">
@@ -58,11 +56,11 @@ export function Component({
               left: 12,
               right: 12,
             }}
-            className="w-[30rem]"
+            className="w-[15rem]"
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey={"ddddd"}
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -78,14 +76,17 @@ export function Component({
                 <stop offset="100%" stopColor="#FDC700" stopOpacity={1} />
               </linearGradient>
             </defs>
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="url(#colorChart)"
-              fillOpacity={0.4}
-              stroke="#F0B100"
-              stackId="a"
-            />
+            {Object.entries(chartConfig).map(([key]) => (
+              <Area
+                key={key}
+                dataKey={key}
+                type="natural"
+                fill="url(#colorChart)"
+                fillOpacity={0.4}
+                stroke={"#F0B100"}
+                stackId="a"
+              />
+            ))}
           </AreaChart>
         </ChartContainer>
       </CardContent>
@@ -96,7 +97,7 @@ export function Component({
               {trend} <TrendingUp className="h-4 w-4" />
             </div>
             <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - May 2025
+              Updated every 30 - 60 - 90 - 120 - 180 seconds
             </div>
           </div>
         </div>
